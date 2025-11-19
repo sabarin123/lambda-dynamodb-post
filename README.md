@@ -102,8 +102,14 @@ Lambda logs are in CloudWatch → useful for debugging
 
 References
 
-AWS SAM Documentation
+📘 References
 
-AWS Lambda Java Handler
+AWS SAM Docs
 
-GitHub OIDC Authentication with AWS
+AWS Java Lambda Docs
+
+GitHub OIDC with AWS
+
+🙌 Author
+
+Created by Sabari as part of AWS + Java Serverless learning and DevOps automation journey.
