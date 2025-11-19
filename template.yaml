@@ -26,7 +26,7 @@ Resources:
     Properties:
       FunctionName: lambda-dynamodb-post
       Handler: org.example.lambda.handler.PostHandler::handleRequest
-      CodeUri: target/  # Point to folder; SAM picks JAR automatically
+      CodeUri: target/lambda-dynamodb-post-1.0-SNAPSHOT.jar
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref MyDynamoDBTable
