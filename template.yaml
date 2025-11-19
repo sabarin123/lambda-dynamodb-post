@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Lambda + DynamoDB SAM Template
+
+Globals:
+  Function:
+    Timeout: 15
+    Runtime: java17
+
+Resources:
+
+  MyDynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: MyDynamoDBTable
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  LambdaDynamoDBFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: lambda-dynamodb-post
+      Handler: org.example.lambda.handler.PostHandler::handleRequest
+      CodeUri: target/lambda-dynamodb-post-1.0-SNAPSHOT.jar
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref MyDynamoDBTable
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref MyDynamoDBTable
+      Events:
+        ApiPost:
+          Type: Api
+          Properties:
+            Path: /post
+            Method: post
+
+Outputs:
+  ApiUrl:
+    Description: "API Gateway endpoint URL for Lambda"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/post"
